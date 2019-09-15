@@ -40,17 +40,22 @@ struct RotateViewManager<T: View>: View {
                 return -(offset + UIScreen.main.bounds.width * CGFloat(index) )
             }
         }
-                 
+        
+        //Content view width
+        let widthOfScrollArea: CGFloat = CGFloat(viewList.count) * (UIScreen.main.bounds.width + spacing) - spacing - 414
+        //Range: -1 ~ 1 (care for situation like only one view, widthOfScrollArea will be 0)
+        let scrollPosition: CGFloat = -offset / ((widthOfScrollArea == 0 ? 1 : widthOfScrollArea) / 2) - 1
+        
         return ZStack {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: self.rotationOn ? self.spacing : 0) {
-                        GeometryReader { geometry -> Text in
+                    GeometryReader { geometry -> Text in
                         if self.rotationOn {
+                            //ScrollView position
                             let newOffset = geometry.frame(in: .global).minX
                             if self.offset != newOffset {
                                 self.offset = newOffset
                             }
-                            print(self.offset)
                         }
                         return Text("")
                     }.frame(width: 0, height: 0)
@@ -72,15 +77,15 @@ struct RotateViewManager<T: View>: View {
                                     .disabled(true)
                             }
                         }
-                        // MARK: - Base on 'offset' to change 'rotationEffect()' 'rotation3DEffect()' and 'scaleEffect()' to make more style.
-                        .rotationEffect(.degrees(self.rotationOn ? Double((-self.offset / 36) - 25) : 0))
-                        .rotation3DEffect(Angle(degrees: self.rotationOn ? 10 : 0), axis: (x: 0, y: 10, z: 0))
-                        .scaleEffect(self.rotationOn ? 0.6 : 1)
-                        .animation(.interpolatingSpring(stiffness: 150, damping: 30))
-                        .frame(width: UIScreen.main.bounds.width)
-                        .onTapGesture {
-                            self.selectedIndex = index
-                            self.rotationOn = false
+                            //Base on 'scrollPosition' to change 'rotationEffect()' 'rotation3DEffect()' and 'scaleEffect()' to make more style.
+                            .rotationEffect(.degrees(self.rotationOn ? -Double(50 * scrollPosition) : 0))
+                            .rotation3DEffect(.degrees(self.rotationOn ? 180 : 0), axis: (x: 0, y: scrollPosition, z: 0))
+                            .scaleEffect(self.rotationOn ? 0.6 : 1)
+                            .animation(.interpolatingSpring(stiffness: 150, damping: 30))
+                            .frame(width: UIScreen.main.bounds.width)
+                            .onTapGesture {
+                                self.selectedIndex = index
+                                self.rotationOn = false
                         }
                     }
                 }

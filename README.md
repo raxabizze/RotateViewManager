@@ -23,14 +23,20 @@ struct ExampleParentView: View {
 }
 ```
 
-#### Base on 'offset' to change 'rotationEffect()' 'rotation3DEffect()' and 'scaleEffect()' to make more style.
+#### Base on 'scrollPosition' to change 'rotationEffect()' 'rotation3DEffect()' and 'scaleEffect()' to make more style.
 
-Simple replace the code with below. (RotateViewManager.swift)
+##### Explain
+
+- `scrollPosition` -> As user scroll, scrollPosition goes between -1 ~ 1.
+
+- `widthOfScrollArea` -> The width of content view.
+
+##### Simple replace the code with below. (RotateViewManager.swift)
 
 - Effect Examples 1 (Like the first gif at top)
 ```swift
-.rotationEffect(.degrees(self.rotationOn ? Double((-self.offset / 36) - 25) : 0))
-.rotation3DEffect(Angle(degrees: self.rotationOn ? 10 : 0), axis: (x: 0, y: 10, z: 0))
+.rotationEffect(.degrees(self.rotationOn ? -Double(50 * scrollPosition) : 0))
+.rotation3DEffect(.degrees(self.rotationOn ? 180 : 0), axis: (x: 0, y: scrollPosition, z: 0))
 .scaleEffect(self.rotationOn ? 0.6 : 1)
 ```
 

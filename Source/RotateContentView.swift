@@ -37,10 +37,11 @@ struct RotateContentView<T: View>: View {
         
         //Calculate content view width or height
         var scrollArea: CGFloat {
+            let count = CGFloat(viewList.count - 1) == 0 ? 1 : CGFloat(viewList.count - 1)
             if axis == .horizontal {
-                return CGFloat(viewList.count) * (UIScreen.main.bounds.width + spacing) - spacing - 414
+                return count * (UIScreen.main.bounds.width + spacing)
             } else {
-                return CGFloat(viewList.count) * (UIScreen.main.bounds.height + spacing) - spacing - 896
+                return count * (UIScreen.main.bounds.height + spacing)
             }
         }
         

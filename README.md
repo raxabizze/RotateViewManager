@@ -2,6 +2,7 @@
 
 ![](https://github.com/raxabizze/RotateViewManager/blob/master/Assets/ExampleGIF1.gif)
 ![](https://github.com/raxabizze/RotateViewManager/blob/master/Assets/ExampleGIF2.gif)
+![](https://github.com/raxabizze/RotateViewManager/blob/master/Assets/ExampleGIF3.gif)
 
 ## Usage
 Copy ```Source/RotateViewManager.swift ```
@@ -33,17 +34,24 @@ struct ExampleParentView: View {
 
 ##### Simple replace the code with below. (RotateViewManager.swift)
 
-- Effect Examples 1 (Like the first gif at top)
+- Effect Examples 1 (#1 GIF)
 ```swift
 .rotationEffect(.degrees(self.rotationOn ? -Double(50 * scrollPosition) : 0))
 .rotation3DEffect(.degrees(self.rotationOn ? 180 : 0), axis: (x: 0, y: scrollPosition, z: 0))
 .scaleEffect(self.rotationOn ? 0.6 : 1)
 ```
 
-- Effect Examples 2 (Like the second gif at top)
+- Effect Examples 2 (#2 GIF)
 ```swift
 .rotation3DEffect(Angle(degrees: self.rotationOn ? 40 : 0), axis: (x: 1, y: 3, z: 0))
 .scaleEffect(self.rotationOn ? 0.8 : 1)
+```
+
+- Effect Examples 3 ( #3 GIF ),  Just remove those three lines.
+```swift
+//.rotationEffect()
+//.rotation3DEffect()
+//.scaleEffect()
 ```
 
 ## More

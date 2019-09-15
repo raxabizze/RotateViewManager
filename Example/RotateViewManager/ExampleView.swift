@@ -15,24 +15,25 @@ let green2 = Color(red: 161 / 255, green: 216 / 255, blue: 177 / 255)
 let green3 = Color(red: 95 / 255, green: 189 / 255, blue: 175 / 255)
 
 struct ExampleParentView: View {
-    @State var rotateOn = false
+    @State var rotationOn = false
     @State var currentIndex = 0
     
     var body: some View {
-        let manager = RotateViewManager(selectedIndex: $currentIndex,
-                                        rotationOn: $rotateOn,
-                                        viewList: [ExampleContentView(rotationOn: $rotateOn, selectedIndex: $currentIndex, color: pink),
-                                                   ExampleContentView(rotationOn: $rotateOn, selectedIndex: $currentIndex, color: green1),
-                                                   ExampleContentView(rotationOn: $rotateOn, selectedIndex: $currentIndex, color: green2),
-                                                   ExampleContentView(rotationOn: $rotateOn, selectedIndex: $currentIndex, color: green3),
-                                                   ExampleContentView(rotationOn: $rotateOn, selectedIndex: $currentIndex, color: pink),
-                                                   ExampleContentView(rotationOn: $rotateOn, selectedIndex: $currentIndex, color: green1),
-                                                   ExampleContentView(rotationOn: $rotateOn, selectedIndex: $currentIndex, color: green2),
-                                                   ExampleContentView(rotationOn: $rotateOn, selectedIndex: $currentIndex, color: green3),
-                                                   ExampleContentView(rotationOn: $rotateOn, selectedIndex: $currentIndex, color: pink),
-                                                   ExampleContentView(rotationOn: $rotateOn, selectedIndex: $currentIndex, color: green1),
-                                                   ExampleContentView(rotationOn: $rotateOn, selectedIndex: $currentIndex, color: green2),
-                                                   ExampleContentView(rotationOn: $rotateOn, selectedIndex: $currentIndex, color: green3)])
+        let manager = RotateViewManager(axis: .vertical,
+                                        currentIndex: $currentIndex,
+                                        rotationOn: $rotationOn,
+                                        viewList: [ExampleContentView(rotationOn: $rotationOn, currentIndex: $currentIndex, color: pink),
+                                                   ExampleContentView(rotationOn: $rotationOn, currentIndex: $currentIndex, color: green1),
+                                                   ExampleContentView(rotationOn: $rotationOn, currentIndex: $currentIndex, color: green2),
+                                                   ExampleContentView(rotationOn: $rotationOn, currentIndex: $currentIndex, color: green3),
+                                                   ExampleContentView(rotationOn: $rotationOn, currentIndex: $currentIndex, color: pink),
+                                                   ExampleContentView(rotationOn: $rotationOn, currentIndex: $currentIndex, color: green1),
+                                                   ExampleContentView(rotationOn: $rotationOn, currentIndex: $currentIndex, color: green2),
+                                                   ExampleContentView(rotationOn: $rotationOn, currentIndex: $currentIndex, color: green3),
+                                                   ExampleContentView(rotationOn: $rotationOn, currentIndex: $currentIndex, color: pink),
+                                                   ExampleContentView(rotationOn: $rotationOn, currentIndex: $currentIndex, color: green1),
+                                                   ExampleContentView(rotationOn: $rotationOn, currentIndex: $currentIndex, color: green2),
+                                                   ExampleContentView(rotationOn: $rotationOn, currentIndex: $currentIndex, color: green3)])
             .background(darkGray)
             .edgesIgnoringSafeArea(.all)
         return manager
@@ -41,7 +42,7 @@ struct ExampleParentView: View {
 
 struct ExampleContentView: View {
     @Binding var rotationOn: Bool
-    @Binding var selectedIndex: Int
+    @Binding var currentIndex: Int
     var color: Color
     
     var body: some View {
@@ -54,7 +55,7 @@ struct ExampleContentView: View {
                     .background(Color.yellow)
                     .cornerRadius(12)
                     .onTapGesture {
-                        self.selectedIndex -= 1
+                        self.currentIndex -= 1
                 }
                 Spacer()
                 Text("Rotate")
@@ -70,7 +71,7 @@ struct ExampleContentView: View {
                     .background(Color.yellow)
                     .cornerRadius(12)
                     .onTapGesture {
-                        self.selectedIndex += 1
+                        self.currentIndex += 1
                 }
                 Spacer()
             }

@@ -60,6 +60,7 @@ struct RotateViewManager<T: View>: View {
                                           blockUserInteractionWhileScrolling: blockUserInteractionWhileScrolling)
                     }
                     .offset(x: newOffset)
+                    .animation(.spring())
                 } else {
                     VStack(spacing: rotationOn ? spacing : 0) {
                         RotateContentView(axis: axis,
@@ -71,9 +72,9 @@ struct RotateViewManager<T: View>: View {
                                           blockUserInteractionWhileScrolling: blockUserInteractionWhileScrolling)
                     }
                     .offset(y: newOffset)
+                    .animation(.spring())
                 }
             }
-            .edgesIgnoringSafeArea([.top, .bottom])
         }
         .edgesIgnoringSafeArea([.top, .bottom])
         .animation(.interpolatingSpring(stiffness: 150, damping: 30))
